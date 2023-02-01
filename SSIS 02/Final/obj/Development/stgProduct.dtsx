@@ -1,0 +1,1575 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/16/2022 3:11:22 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-VQN6DHV"
+  DTS:CreatorName="DESKTOP-VQN6DHV\roeit"
+  DTS:DTSID="{6FEBB503-7E61-4E27-B1B5-91707E0712B4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.694.0"
+  DTS:LocaleID="1037"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:VersionBuild="6"
+  DTS:VersionGUID="{2051C6BA-31ED-44D5-9E0F-205E3949807E}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{1E66DEF5-C29F-44EE-9EED-3C27DDE745CC}"
+      DTS:ObjectName="DESKTOP-VQN6DHV.mrr_dbFinal">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-VQN6DHV;Initial Catalog=mrr_dbFinal;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{1E66DEF5-C29F-44EE-9EED-3C27DDE745CC}DESKTOP-VQN6DHV.mrr_dbFinal;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-VQN6DHV.PriorityERP]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{07EFBCB6-CAA6-411C-8EA4-D917D9A32FCB}"
+      DTS:ObjectName="DESKTOP-VQN6DHV.PriorityERP">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-VQN6DHV;Initial Catalog=PriorityERP;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package1-{07EFBCB6-CAA6-411C-8EA4-D917D9A32FCB}DESKTOP-VQN6DHV.PriorityERP;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{902E33E0-A898-40A0-892F-67F634403C5D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1E66DEF5-C29F-44EE-9EED-3C27DDE745CC}"
+          SQLTask:SqlStatementSource="&#xA;update [DWfinal].[dbo].[dim_product_history]&#xA;set enddate=getdate()&#xA;from stg_product sp &#xA;right join [DWfinal].[dbo].[dim_product_history]  dph on dph.productid=sp.productid&#xA;where sp.productid is null&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\mrr2stg products"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{B648F966-4AB9-441A-93C4-FD551627CEB4}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="mrr2stg products"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\mrr2stg products\Data Conversion"
+              componentClassID="Microsoft.DataConvert"
+              contactInfo="Data Conversion;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Data Conversion"
+              name="Data Conversion"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\mrr2stg products\Data Conversion.Inputs[Data Conversion Input]"
+                  name="Data Conversion Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Data Conversion.Inputs[Data Conversion Input].Columns[categoryID]"
+                      cachedDataType="i8"
+                      cachedName="categoryID"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[categoryID]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Output]"
+                  exclusionGroup="1"
+                  name="Data Conversion Output"
+                  synchronousInputId="Package\mrr2stg products\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of categoryID]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      lineageId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of categoryID]"
+                      name="Copy of categoryID"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the input column used as the source of data for the conversion."
+                          name="SourceInputColumnLineageID">#{Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[categoryID]}</property>
+                        <property
+                          dataType="System.Boolean"
+                          description="Indicates whether the column uses the faster, locale-neutral parsing routines."
+                          name="FastParse">false</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Data Conversion Error Output"
+                  synchronousInputId="Package\mrr2stg products\Data Conversion.Inputs[Data Conversion Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\mrr2stg products\Merge Join"
+              componentClassID="Microsoft.MergeJoin"
+              contactInfo="Merge Join;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Combine two sorted data flows into one using the FULL, LEFT, or INNER join. We recommend this transformation when data flows can be sorted at their sources."
+              name="Merge Join"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the type of join to perform."
+                  name="JoinType"
+                  typeConverter="JoinType">2</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the number of columns in the ordering key."
+                  name="NumKeyColumns">1</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the null values are treated as equal values."
+                  name="TreatNullsAsEqual">true</property>
+                <property
+                  dataType="System.Int32"
+                  description="Indicates the requested maximum buffers per input before blocking."
+                  name="MaxBuffersPerInput">5</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Left Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[Catergoryid]"
+                      cachedDataType="i4"
+                      cachedName="Catergoryid"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Catergoryid]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[ProductName]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="ProductName"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[ProductName]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[productid]"
+                      cachedDataType="i8"
+                      cachedName="productid"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[productid]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[Stock]"
+                      cachedDataType="i8"
+                      cachedName="Stock"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Stock]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[Cost]"
+                      cachedDataType="r8"
+                      cachedName="Cost"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Cost]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[Price]"
+                      cachedDataType="r8"
+                      cachedName="Price"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Price]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+                <input
+                  refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Right Input]"
+                  hasSideEffects="true"
+                  name="Merge Join Right Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Right Input].Columns[CategoryID]"
+                      cachedDataType="i4"
+                      cachedName="CategoryID"
+                      cachedSortKeyPosition="1"
+                      lineageId="Package\mrr2stg products\Sort 1.Outputs[Sort Output].Columns[CategoryID]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Right Input].Columns[Category]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="Category"
+                      lineageId="Package\mrr2stg products\Sort 1.Outputs[Sort Output].Columns[Category]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output]"
+                  name="Merge Join Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[ProductName]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[ProductName]"
+                      name="ProductName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[ProductName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[productid]"
+                      dataType="i8"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[productid]"
+                      name="productid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[productid]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Stock]"
+                      dataType="i8"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Stock]"
+                      name="Stock">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[Stock]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Cost]"
+                      dataType="r8"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Cost]"
+                      name="Cost">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[Cost]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Price]"
+                      dataType="r8"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Price]"
+                      name="Price">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input].Columns[Price]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Category]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Category]"
+                      name="Category">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="The input column associated with this output column"
+                          name="InputColumnID">#{Package\mrr2stg products\Merge Join.Inputs[Merge Join Right Input].Columns[Category]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\mrr2stg products\mrr_famliy"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="mrr_famliy"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[mrr_category]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1255</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\mrr2stg products\mrr_famliy.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[categoryID]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].ExternalColumns[categoryID]"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[categoryID]"
+                      name="categoryID"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[Category]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].ExternalColumns[Category]"
+                      length="8"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[Category]"
+                      name="Category"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].ExternalColumns[categoryID]"
+                      dataType="i8"
+                      name="categoryID" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].ExternalColumns[Category]"
+                      dataType="wstr"
+                      length="8"
+                      name="Category" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output].Columns[categoryID]"
+                      dataType="i8"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output].Columns[categoryID]"
+                      name="categoryID" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output].Columns[Category]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output].Columns[Category]"
+                      name="Category" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\mrr2stg products\mrr_part"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="mrr_part"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[mrr_part1]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1255</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\mrr2stg products\mrr_part.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[ProductName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[PARTNAME]"
+                      length="15"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[ProductName]"
+                      name="ProductName"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[productid]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[PART]"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[productid]"
+                      name="productid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Stock]"
+                      dataType="i8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[UNIT]"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Stock]"
+                      name="Stock"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Cost]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[COST]"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Cost]"
+                      name="Cost"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Price]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[PRICE]"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Price]"
+                      name="Price"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Catergoryid]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[catergoryid]"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Catergoryid]"
+                      name="Catergoryid"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[PARTNAME]"
+                      dataType="wstr"
+                      length="15"
+                      name="PARTNAME" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[PART]"
+                      dataType="i8"
+                      name="PART" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[UNIT]"
+                      dataType="i8"
+                      name="UNIT" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[COST]"
+                      dataType="r8"
+                      name="COST" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[PRICE]"
+                      dataType="r8"
+                      name="PRICE" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].ExternalColumns[catergoryid]"
+                      dataType="i4"
+                      name="catergoryid" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[PARTNAME]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[PARTNAME]"
+                      name="PARTNAME" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[PART]"
+                      dataType="i8"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[PART]"
+                      name="PART" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[UNIT]"
+                      dataType="i8"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[UNIT]"
+                      name="UNIT" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[COST]"
+                      dataType="r8"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[COST]"
+                      name="COST" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[PRICE]"
+                      dataType="r8"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[PRICE]"
+                      name="PRICE" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[catergoryid]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[catergoryid]"
+                      name="catergoryid" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\mrr2stg products\Sort"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\mrr2stg products\Sort.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort.Inputs[Sort Input].Columns[ProductName]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="ProductName"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[ProductName]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort.Inputs[Sort Input].Columns[productid]"
+                      cachedDataType="i8"
+                      cachedName="productid"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[productid]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort.Inputs[Sort Input].Columns[Stock]"
+                      cachedDataType="i8"
+                      cachedName="Stock"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Stock]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort.Inputs[Sort Input].Columns[Cost]"
+                      cachedDataType="r8"
+                      cachedName="Cost"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Cost]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort.Inputs[Sort Input].Columns[Price]"
+                      cachedDataType="r8"
+                      cachedName="Price"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Price]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort.Inputs[Sort Input].Columns[Catergoryid]"
+                      cachedDataType="i4"
+                      cachedName="Catergoryid"
+                      lineageId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Catergoryid]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg products\Sort.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[ProductName]"
+                      dataType="wstr"
+                      length="15"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[ProductName]"
+                      name="ProductName">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[ProductName]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[productid]"
+                      dataType="i8"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[productid]"
+                      name="productid">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[productid]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Stock]"
+                      dataType="i8"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Stock]"
+                      name="Stock">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Stock]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Cost]"
+                      dataType="r8"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Cost]"
+                      name="Cost">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Cost]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Price]"
+                      dataType="r8"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Price]"
+                      name="Price">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Price]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Catergoryid]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\Sort.Outputs[Sort Output].Columns[Catergoryid]"
+                      name="Catergoryid"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output].Columns[Catergoryid]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\mrr2stg products\Sort 1"
+              componentClassID="Microsoft.Sort"
+              contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+              description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+              name="Sort 1"
+              version="1">
+              <properties>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                  name="EliminateDuplicates">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the maximum number of threads to use for sorting."
+                  expressionType="Notify"
+                  name="MaximumThreads">-1</property>
+              </properties>
+              <inputs>
+                <input
+                  refId="Package\mrr2stg products\Sort 1.Inputs[Sort Input]"
+                  name="Sort Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort 1.Inputs[Sort Input].Columns[categoryID]"
+                      cachedDataType="i8"
+                      cachedName="categoryID"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[categoryID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort 1.Inputs[Sort Input].Columns[Category]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="Category"
+                      lineageId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[Category]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">0</property>
+                      </properties>
+                    </inputColumn>
+                    <inputColumn
+                      refId="Package\mrr2stg products\Sort 1.Inputs[Sort Input].Columns[Copy of categoryID]"
+                      cachedDataType="i4"
+                      cachedName="Copy of categoryID"
+                      lineageId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of categoryID]">
+                      <properties>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the comparison options for character data."
+                          name="NewComparisonFlags">0</property>
+                        <property
+                          dataType="System.Int32"
+                          description="Specifies the sort order of the column."
+                          name="NewSortKeyPosition">1</property>
+                      </properties>
+                    </inputColumn>
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg products\Sort 1.Outputs[Sort Output]"
+                  isSorted="true"
+                  name="Sort Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort 1.Outputs[Sort Output].Columns[categoryID]"
+                      dataType="i8"
+                      lineageId="Package\mrr2stg products\Sort 1.Outputs[Sort Output].Columns[categoryID]"
+                      name="categoryID">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[categoryID]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort 1.Outputs[Sort Output].Columns[Category]"
+                      dataType="wstr"
+                      length="8"
+                      lineageId="Package\mrr2stg products\Sort 1.Outputs[Sort Output].Columns[Category]"
+                      name="Category">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output].Columns[Category]}</property>
+                      </properties>
+                    </outputColumn>
+                    <outputColumn
+                      refId="Package\mrr2stg products\Sort 1.Outputs[Sort Output].Columns[CategoryID]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\Sort 1.Outputs[Sort Output].Columns[CategoryID]"
+                      name="CategoryID"
+                      sortKeyPosition="1">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.Int32"
+                          description="Specifies the lineage identifier of the input column that is associated with this output column."
+                          name="SortColumnId">#{Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Output].Columns[Copy of categoryID]}</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\mrr2stg products\STG_PRODUCT"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="STG_PRODUCT"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg_product]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1255</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\mrr2stg products\STG_PRODUCT.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].Columns[ProductName]"
+                      cachedDataType="wstr"
+                      cachedLength="15"
+                      cachedName="ProductName"
+                      externalMetadataColumnId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[ProductName]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].Columns[productid]"
+                      cachedDataType="i8"
+                      cachedName="productid"
+                      externalMetadataColumnId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[productid]"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[productid]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].Columns[Stock]"
+                      cachedDataType="i8"
+                      cachedName="Stock"
+                      externalMetadataColumnId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Stock]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].Columns[Cost]"
+                      cachedDataType="r8"
+                      cachedName="Cost"
+                      externalMetadataColumnId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[Cost]"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Cost]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].Columns[Price]"
+                      cachedDataType="r8"
+                      cachedName="Price"
+                      externalMetadataColumnId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Price]" />
+                    <inputColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].Columns[Category]"
+                      cachedDataType="wstr"
+                      cachedLength="8"
+                      cachedName="Category"
+                      externalMetadataColumnId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[Category]"
+                      lineageId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output].Columns[Category]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
+                      dataType="wstr"
+                      length="15"
+                      name="ProductName" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[productid]"
+                      dataType="i8"
+                      name="productid" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
+                      dataType="i8"
+                      name="Stock" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[Cost]"
+                      dataType="r8"
+                      name="Cost" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                      dataType="r8"
+                      name="Price" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input].ExternalColumns[Category]"
+                      dataType="wstr"
+                      length="8"
+                      name="Category" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg products\STG_PRODUCT.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\STG_PRODUCT.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\mrr2stg products\STG_PRODUCT.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg products\STG_PRODUCT.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\mrr2stg products.Paths[Data Conversion Output]"
+              endId="Package\mrr2stg products\Sort 1.Inputs[Sort Input]"
+              name="Data Conversion Output"
+              startId="Package\mrr2stg products\Data Conversion.Outputs[Data Conversion Output]" />
+            <path
+              refId="Package\mrr2stg products.Paths[Merge Join Output]"
+              endId="Package\mrr2stg products\STG_PRODUCT.Inputs[OLE DB Destination Input]"
+              name="Merge Join Output"
+              startId="Package\mrr2stg products\Merge Join.Outputs[Merge Join Output]" />
+            <path
+              refId="Package\mrr2stg products.Paths[OLE DB Source Output]"
+              endId="Package\mrr2stg products\Sort.Inputs[Sort Input]"
+              name="OLE DB Source Output"
+              startId="Package\mrr2stg products\mrr_part.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\mrr2stg products.Paths[OLE DB Source Output1]"
+              endId="Package\mrr2stg products\Data Conversion.Inputs[Data Conversion Input]"
+              name="OLE DB Source Output"
+              startId="Package\mrr2stg products\mrr_famliy.Outputs[OLE DB Source Output]" />
+            <path
+              refId="Package\mrr2stg products.Paths[Sort Output]"
+              endId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Left Input]"
+              name="Sort Output"
+              startId="Package\mrr2stg products\Sort.Outputs[Sort Output]" />
+            <path
+              refId="Package\mrr2stg products.Paths[Sort Output1]"
+              endId="Package\mrr2stg products\Merge Join.Inputs[Merge Join Right Input]"
+              name="Sort Output"
+              startId="Package\mrr2stg products\Sort 1.Outputs[Sort Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate products"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{EC87832C-4A54-4E6B-A9EE-6D022C89F7AE}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate products"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{1E66DEF5-C29F-44EE-9EED-3C27DDE745CC}"
+          SQLTask:SqlStatementSource="truncate table stg_product" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{C704B169-87AF-4A25-AFF4-31378304998C}"
+      DTS:From="Package\truncate products"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\mrr2stg products" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{E626D0F7-2D46-47AB-B968-B250467768F5}"
+      DTS:From="Package\mrr2stg products"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Execute SQL Task" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="163.5,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="258,258.5" />
+        <NodeLayout
+          Size="159.5,42"
+          Id="Package\mrr2stg products"
+          TopLeft="256.875,141.25" />
+        <NodeLayout
+          Size="162,42"
+          Id="Package\truncate products"
+          TopLeft="251.875,25" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="334.75,67">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,74.25"
+              Start="0,0"
+              End="0,66.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="338.1875,183.25">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75.25"
+              Start="0,0"
+              End="0,67.75">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,67.75" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\mrr2stg products">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="107.5,42"
+          Id="Package\mrr2stg products\Sort 1"
+          TopLeft="727.166666666667,215.833333333333" />
+        <NodeLayout
+          Size="151,42"
+          Id="Package\mrr2stg products\STG_PRODUCT"
+          TopLeft="548.666666666667,436.5" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\mrr2stg products\Merge Join"
+          TopLeft="565.833333333333,291.666666666667" />
+        <NodeLayout
+          Size="120.5,42"
+          Id="Package\mrr2stg products\mrr_part"
+          TopLeft="431,28" />
+        <NodeLayout
+          Size="98,42"
+          Id="Package\mrr2stg products\Sort"
+          TopLeft="453,173" />
+        <NodeLayout
+          Size="129.5,42"
+          Id="Package\mrr2stg products\mrr_famliy"
+          TopLeft="690,31" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\mrr2stg products\Data Conversion"
+          TopLeft="740.833333333333,110" />
+        <EdgeLayout
+          Id="Package\mrr2stg products.Paths[Sort Output1]"
+          TopLeft="780.916666666667,257.833333333333">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-129.75,33.8333333333333"
+              Start="0,0"
+              End="-129.75,26.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.0531914893617" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.0531914893617"
+                    Point2="0,20.0531914893617"
+                    Point3="-4,20.0531914893617" />
+                  <mssgle:LineSegment
+                    End="-125.75,20.0531914893617" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-125.75,20.0531914893617"
+                    Point2="-129.75,20.0531914893617"
+                    Point3="-129.75,24.0531914893617" />
+                  <mssgle:LineSegment
+                    End="-129.75,26.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\mrr2stg products.Paths[Sort Output]"
+          TopLeft="502,215">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="128.833333333333,76.6666666666667"
+              Start="0,0"
+              End="128.833333333333,69.1666666666667">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,34.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,34.3333333333333"
+                    Point2="0,38.3333333333333"
+                    Point3="4,38.3333333333333" />
+                  <mssgle:LineSegment
+                    End="124.833333333333,38.3333333333333" />
+                  <mssgle:CubicBezierSegment
+                    Point1="124.833333333333,38.3333333333333"
+                    Point2="128.833333333333,38.3333333333333"
+                    Point3="128.833333333333,42.3333333333333" />
+                  <mssgle:LineSegment
+                    End="128.833333333333,69.1666666666667" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\mrr2stg products.Paths[OLE DB Source Output1]"
+          TopLeft="754.75,73">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="64.0833333333334,37"
+              Start="0,0"
+              End="64.0833333333334,29.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,14.5"
+                    Point2="0,18.5"
+                    Point3="4,18.5" />
+                  <mssgle:LineSegment
+                    End="60.0833333333334,18.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="60.0833333333334,18.5"
+                    Point2="64.0833333333334,18.5"
+                    Point3="64.0833333333334,22.5" />
+                  <mssgle:LineSegment
+                    End="64.0833333333334,29.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\mrr2stg products.Paths[OLE DB Source Output]"
+          TopLeft="491.25,70">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="10.75,103"
+              Start="0,0"
+              End="10.75,95.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,47.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,47.5"
+                    Point2="0,51.5"
+                    Point3="4,51.5" />
+                  <mssgle:LineSegment
+                    End="6.75,51.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="6.75,51.5"
+                    Point2="10.75,51.5"
+                    Point3="10.75,55.5" />
+                  <mssgle:LineSegment
+                    End="10.75,95.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\mrr2stg products.Paths[Merge Join Output]"
+          TopLeft="627.5,333.666666666667">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,102.833333333333"
+              Start="0,0"
+              End="0,95.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,95.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\mrr2stg products.Paths[Data Conversion Output]"
+          TopLeft="818.833333333333,152">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.9166666666666,63.8333333333333"
+              Start="0,0"
+              End="-37.9166666666666,56.3333333333333">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,27.9166666666667" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,27.9166666666667"
+                    Point2="0,31.9166666666667"
+                    Point3="-4,31.9166666666667" />
+                  <mssgle:LineSegment
+                    End="-33.9166666666666,31.9166666666667" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.9166666666666,31.9166666666667"
+                    Point2="-37.9166666666666,31.9166666666667"
+                    Point3="-37.9166666666666,35.9166666666667" />
+                  <mssgle:LineSegment
+                    End="-37.9166666666666,56.3333333333333" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\mrr2stg products\STG_PRODUCT">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\mrr2stg products\mrr_part">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\mrr2stg products\mrr_famliy">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

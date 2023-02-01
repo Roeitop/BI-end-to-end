@@ -1,0 +1,2119 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/17/2022 10:53:22 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-VQN6DHV"
+  DTS:CreatorName="DESKTOP-VQN6DHV\roeit"
+  DTS:DTSID="{558DD9F6-D9C4-47A3-888A-4166E49893BC}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.694.0"
+  DTS:LocaleID="1037"
+  DTS:ObjectName="Package3"
+  DTS:PackageType="5"
+  DTS:VersionBuild="19"
+  DTS:VersionGUID="{001180A1-9794-4500-AFFF-2183F8E3D172}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{93343B27-9265-4086-A7D8-45615FDF74F8}"
+      DTS:ObjectName="DESKTOP-VQN6DHV.DWfinal">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-VQN6DHV;Initial Catalog=DWfinal;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package3-{93343B27-9265-4086-A7D8-45615FDF74F8}DESKTOP-VQN6DHV.DWfinal;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{04D38837-E9B9-4580-BB60-5286C9CB06EE}"
+      DTS:ObjectName="DESKTOP-VQN6DHV.mrr_dbFinal">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-VQN6DHV;Initial Catalog=mrr_dbFinal;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package3-{04D38837-E9B9-4580-BB60-5286C9CB06EE}DESKTOP-VQN6DHV.mrr_dbFinal;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Execute SQL Task"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F2E73174-268E-4E0F-ADC9-24B565A30660}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Execute SQL Task"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{93343B27-9265-4086-A7D8-45615FDF74F8}"
+          SQLTask:SqlStatementSource="truncate table factsales1&#xA;truncate table [dbo].[dim_product2]&#xA;truncate table [dbo].[dim_customers]&#xA;truncate table [dbo].[dim_agents]" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\stg 2 dim"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{920D59BF-6AF4-4DC3-AAFE-073408C1927E}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="stg 2 dim">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\stg 2 dim\dim agents"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{A130D2FE-93B0-43BE-89B2-E55B9F3CA3ED}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="dim agents"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\stg 2 dim\dim agents\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dim_agents]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1255</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\stg 2 dim\dim agents\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+                      connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Agentid]"
+                          cachedDataType="i4"
+                          cachedName="Agentid"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Agentid]"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Agentid]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Commission]"
+                          cachedDataType="r8"
+                          cachedName="Commission"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Commission]"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Commission]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Currency]"
+                          cachedDataType="wstr"
+                          cachedLength="40"
+                          cachedName="Currency"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Currency]"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Currency]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[State]"
+                          cachedDataType="wstr"
+                          cachedLength="40"
+                          cachedName="State"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Country]"
+                          cachedDataType="wstr"
+                          cachedLength="40"
+                          cachedName="Country"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[AgentName]"
+                          cachedDataType="wstr"
+                          cachedLength="113"
+                          cachedName="AgentName"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AgentName]"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[AgentName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Agentid]"
+                          dataType="i4"
+                          name="Agentid" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Commission]"
+                          dataType="r8"
+                          name="Commission" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Currency]"
+                          dataType="wstr"
+                          length="40"
+                          name="Currency" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                          dataType="wstr"
+                          length="40"
+                          name="State" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
+                          dataType="wstr"
+                          length="40"
+                          name="Country" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[AgentName]"
+                          dataType="wstr"
+                          length="113"
+                          name="AgentName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\stg 2 dim\dim agents\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\stg 2 dim\dim agents\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[stg_agents]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1255</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\stg 2 dim\dim agents\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                      connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Agentid]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Agentid]"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Agentid]"
+                          name="Agentid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Commission]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Commission]"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Commission]"
+                          name="Commission"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Currency]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Currency]"
+                          length="40"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Currency]"
+                          name="Currency"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                          length="40"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[State]"
+                          name="State"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Country]"
+                          length="40"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[Country]"
+                          name="Country"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[AgentName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AgentName]"
+                          length="113"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].Columns[AgentName]"
+                          name="AgentName"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Agentid]"
+                          dataType="i4"
+                          name="Agentid" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Commission]"
+                          dataType="r8"
+                          name="Commission" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Currency]"
+                          dataType="wstr"
+                          length="40"
+                          name="Currency" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[State]"
+                          dataType="wstr"
+                          length="40"
+                          name="State" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Country]"
+                          dataType="wstr"
+                          length="40"
+                          name="Country" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AgentName]"
+                          dataType="wstr"
+                          length="113"
+                          name="AgentName" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Agentid]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Agentid]"
+                          name="Agentid" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Commission]"
+                          dataType="r8"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Commission]"
+                          name="Commission" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Currency]"
+                          dataType="wstr"
+                          length="40"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Currency]"
+                          name="Currency" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[State]"
+                          dataType="wstr"
+                          length="40"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[State]"
+                          name="State" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Country]"
+                          dataType="wstr"
+                          length="40"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Country]"
+                          name="Country" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AgentName]"
+                          dataType="wstr"
+                          length="113"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AgentName]"
+                          name="AgentName" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\stg 2 dim\dim agents.Paths[OLE DB Source Output]"
+                  endId="Package\stg 2 dim\dim agents\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\stg 2 dim\dim agents\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\stg 2 dim\dim customers"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{F2A63ED4-A92E-470F-9009-71E57A476245}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="dim customers"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\stg 2 dim\dim customers\dim customers"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="dim customers"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dim_customers]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1255</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\stg 2 dim\dim customers\dim customers.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+                      connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input].Columns[CustomerId]"
+                          cachedDataType="i4"
+                          cachedName="CustomerId"
+                          externalMetadataColumnId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input].ExternalColumns[CustomerId]"
+                          lineageId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].Columns[CustomerId]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input].Columns[FullName]"
+                          cachedDataType="wstr"
+                          cachedLength="37"
+                          cachedName="FullName"
+                          externalMetadataColumnId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input].ExternalColumns[FullName]"
+                          lineageId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].Columns[FullName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input].ExternalColumns[CustomerId]"
+                          dataType="i4"
+                          name="CustomerId" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input].ExternalColumns[FullName]"
+                          dataType="wstr"
+                          length="37"
+                          name="FullName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\stg 2 dim\dim customers\dim customers.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim customers\dim customers.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim customers\dim customers.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim customers\dim customers.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim customers\dim customers.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\stg 2 dim\dim customers\stg customers"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="stg customers"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[stg_customers]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1255</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\stg 2 dim\dim customers\stg customers.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                      connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].Columns[CustomerId]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].ExternalColumns[CustomerId]"
+                          lineageId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].Columns[CustomerId]"
+                          name="CustomerId"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].Columns[FullName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].ExternalColumns[FullName]"
+                          length="37"
+                          lineageId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].Columns[FullName]"
+                          name="FullName"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].ExternalColumns[CustomerId]"
+                          dataType="i4"
+                          name="CustomerId" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output].ExternalColumns[FullName]"
+                          dataType="wstr"
+                          length="37"
+                          name="FullName" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output].Columns[CustomerId]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output].Columns[CustomerId]"
+                          name="CustomerId" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output].Columns[FullName]"
+                          dataType="wstr"
+                          length="37"
+                          lineageId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output].Columns[FullName]"
+                          name="FullName" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\stg 2 dim\dim customers.Paths[OLE DB Source Output]"
+                  endId="Package\stg 2 dim\dim customers\dim customers.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\stg 2 dim\dim customers\stg customers.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\stg 2 dim\dim product"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{B93DB7B7-BDC7-4A4A-A3FC-FD92BF079A06}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="dim product"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\stg 2 dim\dim product\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[dim_product2]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1255</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\stg 2 dim\dim product\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+                      connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductName]"
+                          cachedDataType="wstr"
+                          cachedLength="15"
+                          cachedName="ProductName"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[productid]"
+                          cachedDataType="i8"
+                          cachedName="productid"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[productid]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[productid]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Stock]"
+                          cachedDataType="i8"
+                          cachedName="Stock"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Cost]"
+                          cachedDataType="r8"
+                          cachedName="Cost"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Cost]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Cost]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Price]"
+                          cachedDataType="r8"
+                          cachedName="Price"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Price]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Category]"
+                          cachedDataType="wstr"
+                          cachedLength="8"
+                          cachedName="Category"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Category]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
+                          dataType="wstr"
+                          length="15"
+                          name="ProductName" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[productid]"
+                          dataType="i8"
+                          name="productid" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Stock]"
+                          dataType="i8"
+                          name="Stock" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Cost]"
+                          dataType="r8"
+                          name="Cost" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                          dataType="r8"
+                          name="Price" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Category]"
+                          dataType="wstr"
+                          length="8"
+                          name="Category" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\stg 2 dim\dim product\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\stg 2 dim\dim product\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[stg_product]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1255</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\stg 2 dim\dim product\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                      connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductName]"
+                          length="15"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]"
+                          name="ProductName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[productid]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[productid]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[productid]"
+                          name="productid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Stock]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Stock]"
+                          name="Stock"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Cost]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Cost]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Cost]"
+                          name="Cost"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Price]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Price]"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Price]"
+                          name="Price"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Category]"
+                          length="8"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].Columns[Category]"
+                          name="Category"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductName]"
+                          dataType="wstr"
+                          length="15"
+                          name="ProductName" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[productid]"
+                          dataType="i8"
+                          name="productid" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Stock]"
+                          dataType="i8"
+                          name="Stock" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Cost]"
+                          dataType="r8"
+                          name="Cost" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Price]"
+                          dataType="r8"
+                          name="Price" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[Category]"
+                          dataType="wstr"
+                          length="8"
+                          name="Category" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductName]"
+                          dataType="wstr"
+                          length="15"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductName]"
+                          name="ProductName" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[productid]"
+                          dataType="i8"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[productid]"
+                          name="productid" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Stock]"
+                          dataType="i8"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Stock]"
+                          name="Stock" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Cost]"
+                          dataType="r8"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Cost]"
+                          name="Cost" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Price]"
+                          dataType="r8"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Price]"
+                          name="Price" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Category]"
+                          dataType="wstr"
+                          length="8"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[Category]"
+                          name="Category" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\stg 2 dim\dim product.Paths[OLE DB Source Output]"
+                  endId="Package\stg 2 dim\dim product\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\stg 2 dim\dim product\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\stg 2 dim\FactSale"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{8253C023-79AF-415D-A8EB-5173CFF24796}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="FactSale"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\stg 2 dim\FactSale\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[Factsales1]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1255</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">3</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\stg 2 dim\FactSale\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+                      connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.DWfinal]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[InvoiceDate]"
+                          cachedDataType="dbDate"
+                          cachedName="InvoiceDate"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[InvoiceDate]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[InvoiceDate]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[PricePerItem]"
+                          cachedDataType="r8"
+                          cachedName="PricePerItem"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PricePerItem]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[PricePerItem]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[VatPerItem]"
+                          cachedDataType="r8"
+                          cachedName="VatPerItem"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VatPerItem]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[VatPerItem]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Invoiceid]"
+                          cachedDataType="i4"
+                          cachedName="Invoiceid"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Invoiceid]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoiceid]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Customerid]"
+                          cachedDataType="i4"
+                          cachedName="Customerid"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customerid]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customerid]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Agentid]"
+                          cachedDataType="i4"
+                          cachedName="Agentid"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Agentid]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Agentid]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Price]"
+                          cachedDataType="r8"
+                          cachedName="Price"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Price]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Quantity]"
+                          cachedDataType="i8"
+                          cachedName="Quantity"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]" />
+                        <inputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[Productid]"
+                          cachedDataType="i8"
+                          cachedName="Productid"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Productid]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Productid]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[InvoiceDate]"
+                          dataType="dbDate"
+                          name="InvoiceDate" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[PricePerItem]"
+                          dataType="r8"
+                          name="PricePerItem" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[VatPerItem]"
+                          dataType="r8"
+                          name="VatPerItem" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Invoiceid]"
+                          dataType="i4"
+                          name="Invoiceid" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Customerid]"
+                          dataType="i4"
+                          name="Customerid" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Agentid]"
+                          dataType="i4"
+                          name="Agentid" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Price]"
+                          dataType="r8"
+                          name="Price" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Quantity]"
+                          dataType="i8"
+                          name="Quantity" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[Productid]"
+                          dataType="i8"
+                          name="Productid" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\stg 2 dim\FactSale\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\stg 2 dim\FactSale\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[FactSale]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1255</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\stg 2 dim\FactSale\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                      connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[InvoiceDate]"
+                          dataType="dbDate"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IVDATE]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[InvoiceDate]"
+                          name="InvoiceDate"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoiceid]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IV (1)]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Invoiceid]"
+                          name="Invoiceid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customerid]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CUST]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Customerid]"
+                          name="Customerid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Agentid]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AGENT]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Agentid]"
+                          name="Agentid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Price]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PRICE]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Price]"
+                          name="Price"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QUANT]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Quantity]"
+                          name="Quantity"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Productid]"
+                          dataType="i8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PART]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[Productid]"
+                          name="Productid"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[PricePerItem]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PricePerItem]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[PricePerItem]"
+                          name="PricePerItem"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[VatPerItem]"
+                          dataType="r8"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[VatPerItem]"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].Columns[VatPerItem]"
+                          name="VatPerItem"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IVDATE]"
+                          dataType="dbDate"
+                          name="IVDATE" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[IV (1)]"
+                          dataType="i4"
+                          name="IV (1)" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CUST]"
+                          dataType="i4"
+                          name="CUST" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[AGENT]"
+                          dataType="i4"
+                          name="AGENT" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PRICE]"
+                          dataType="r8"
+                          name="PRICE" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[QUANT]"
+                          dataType="i8"
+                          name="QUANT" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PART]"
+                          dataType="i8"
+                          name="PART" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[PricePerItem]"
+                          dataType="r8"
+                          name="PricePerItem" />
+                        <externalMetadataColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[VatPerItem]"
+                          dataType="r8"
+                          name="VatPerItem" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IV (1)]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IV (1)]"
+                          name="IV (1)" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IVDATE]"
+                          dataType="dbDate"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[IVDATE]"
+                          name="IVDATE" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CUST]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CUST]"
+                          name="CUST" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AGENT]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[AGENT]"
+                          name="AGENT" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PRICE]"
+                          dataType="r8"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PRICE]"
+                          name="PRICE" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QUANT]"
+                          dataType="i8"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[QUANT]"
+                          name="QUANT" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PART]"
+                          dataType="i8"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PART]"
+                          name="PART" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PricePerItem]"
+                          dataType="r8"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[PricePerItem]"
+                          name="PricePerItem" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[VatPerItem]"
+                          dataType="r8"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[VatPerItem]"
+                          name="VatPerItem" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\stg 2 dim\FactSale.Paths[OLE DB Source Output]"
+                  endId="Package\stg 2 dim\FactSale\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\stg 2 dim\FactSale\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\stg 2 dim.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{998E9B13-CC76-4244-938D-EFAEFBEE8BD2}"
+          DTS:From="Package\stg 2 dim\dim customers"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\stg 2 dim\FactSale" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\stg 2 dim.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{9F59642A-3224-46F0-853D-C6F5988064A6}"
+          DTS:From="Package\stg 2 dim\dim product"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\stg 2 dim\FactSale" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\stg 2 dim.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{2404CF49-E13F-4F9A-9117-04193BAC14B6}"
+          DTS:From="Package\stg 2 dim\dim agents"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\stg 2 dim\FactSale" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{A57B0B40-2E85-4BE2-A264-9DA1B5F1167C}"
+      DTS:From="Package\Execute SQL Task"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\stg 2 dim" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="163.5,42"
+          Id="Package\Execute SQL Task"
+          TopLeft="560,25" />
+        <NodeLayout
+          Size="130.5,42"
+          Id="Package\stg 2 dim\dim agents"
+          TopLeft="347.214285714286,12.8571428571429" />
+        <NodeLayout
+          Size="148,42"
+          Id="Package\stg 2 dim\dim customers"
+          TopLeft="24.4910717778174,23.9732158112204" />
+        <NodeLayout
+          Size="140,42"
+          Id="Package\stg 2 dim\dim product"
+          TopLeft="180.785714285714,20" />
+        <NodeLayout
+          Size="118,42"
+          Id="Package\stg 2 dim\FactSale"
+          TopLeft="210.48660447362,142.866069359279" />
+        <EdgeLayout
+          Id="Package\stg 2 dim.PrecedenceConstraints[Constraint]"
+          TopLeft="98.4910717778174,65.9732158112204">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="143.495532695803,76.8928535480589"
+              Start="0,0"
+              End="143.495532695803,69.3928535480589">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,46.1290426445909" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,46.1290426445909"
+                    Point2="0,50.1290426445909"
+                    Point3="4,50.1290426445909" />
+                  <mssgle:LineSegment
+                    End="139.495532695803,50.1290426445909" />
+                  <mssgle:CubicBezierSegment
+                    Point1="139.495532695803,50.1290426445909"
+                    Point2="143.495532695803,50.1290426445909"
+                    Point3="143.495532695803,54.1290426445909" />
+                  <mssgle:LineSegment
+                    End="143.495532695803,69.3928535480589" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\stg 2 dim.PrecedenceConstraints[Constraint 1]"
+          TopLeft="250.785714285714,62">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="18.700890187906,80.8660693592793"
+              Start="0,0"
+              End="18.700890187906,73.3660693592793">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,36.4330346796396" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,36.4330346796396"
+                    Point2="0,40.4330346796396"
+                    Point3="4,40.4330346796396" />
+                  <mssgle:LineSegment
+                    End="14.700890187906,40.4330346796396" />
+                  <mssgle:CubicBezierSegment
+                    Point1="14.700890187906,40.4330346796396"
+                    Point2="18.700890187906,40.4330346796396"
+                    Point3="18.700890187906,44.4330346796396" />
+                  <mssgle:LineSegment
+                    End="18.700890187906,73.3660693592793" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\stg 2 dim.PrecedenceConstraints[Constraint 2]"
+          TopLeft="412.547619047619,54.8571428571429">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-115.561014573999,88.0089265021364"
+              Start="0,0"
+              End="-115.561014573999,80.5089265021364">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,53.375985233437" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,53.375985233437"
+                    Point2="0,57.375985233437"
+                    Point3="-4,57.375985233437" />
+                  <mssgle:LineSegment
+                    End="-111.561014573999,57.375985233437" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-111.561014573999,57.375985233437"
+                    Point2="-115.561014573999,57.375985233437"
+                    Point3="-115.561014573999,61.375985233437" />
+                  <mssgle:LineSegment
+                    End="-115.561014573999,80.5089265021364" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="483.5,237.5"
+          Size="483.5,280"
+          Id="Package\stg 2 dim"
+          TopLeft="362.142857142857,107.785714285714" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="641.666666666667,67">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-37.857142857143,40.785714285714"
+              Start="0,0"
+              End="-37.857142857143,33.285714285714">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16.392857142857" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16.392857142857"
+                    Point2="0,20.392857142857"
+                    Point3="-4,20.392857142857" />
+                  <mssgle:LineSegment
+                    End="-33.857142857143,20.392857142857" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-33.857142857143,20.392857142857"
+                    Point2="-37.857142857143,20.392857142857"
+                    Point3="-37.857142857143,24.392857142857" />
+                  <mssgle:LineSegment
+                    End="-37.857142857143,33.285714285714" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\stg 2 dim\dim agents">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\stg 2 dim\dim agents\OLE DB Source"
+          TopLeft="504,58" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\stg 2 dim\dim agents\OLE DB Destination"
+          TopLeft="483,218" />
+        <EdgeLayout
+          Id="Package\stg 2 dim\dim agents.Paths[OLE DB Source Output]"
+          TopLeft="579,100">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-10.5,118"
+              Start="0,0"
+              End="-10.5,110.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,55" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,55"
+                    Point2="0,59"
+                    Point3="-4,59" />
+                  <mssgle:LineSegment
+                    End="-6.5,59" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-6.5,59"
+                    Point2="-10.5,59"
+                    Point3="-10.5,63" />
+                  <mssgle:LineSegment
+                    End="-10.5,110.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\stg 2 dim\dim agents\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\stg 2 dim\dim agents\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\stg 2 dim\dim customers">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="144.666666666667,42"
+          Id="Package\stg 2 dim\dim customers\stg customers"
+          TopLeft="582,75" />
+        <NodeLayout
+          Size="148,42"
+          Id="Package\stg 2 dim\dim customers\dim customers"
+          TopLeft="558,238" />
+        <EdgeLayout
+          Id="Package\stg 2 dim\dim customers.Paths[OLE DB Source Output]"
+          TopLeft="654.25,117">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-22.25,121"
+              Start="0,0"
+              End="-22.25,113.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,56.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,56.5"
+                    Point2="0,60.5"
+                    Point3="-4,60.5" />
+                  <mssgle:LineSegment
+                    End="-18.25,60.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-18.25,60.5"
+                    Point2="-22.25,60.5"
+                    Point3="-22.25,64.5" />
+                  <mssgle:LineSegment
+                    End="-22.25,113.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\stg 2 dim\dim customers\dim customers">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\stg 2 dim\dim customers\stg customers">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\stg 2 dim\dim product">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\stg 2 dim\dim product\OLE DB Source"
+          TopLeft="535,31" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\stg 2 dim\dim product\OLE DB Destination"
+          TopLeft="532,185" />
+        <EdgeLayout
+          Id="Package\stg 2 dim\dim product.Paths[OLE DB Source Output]"
+          TopLeft="613.75,73">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,112"
+              Start="0,0"
+              End="0,104.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,104.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\stg 2 dim\dim product\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\stg 2 dim\dim product\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <TaskHost
+    design-time-name="Package\stg 2 dim\FactSale">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\stg 2 dim\FactSale\OLE DB Source"
+          TopLeft="330,16.5" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\stg 2 dim\FactSale\OLE DB Destination"
+          TopLeft="326,134" />
+        <EdgeLayout
+          Id="Package\stg 2 dim\FactSale.Paths[OLE DB Source Output]"
+          TopLeft="408.25,58.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,75.5"
+              Start="0,0"
+              End="0,68">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,68" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\stg 2 dim\FactSale\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\stg 2 dim\FactSale\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

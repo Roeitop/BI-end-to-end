@@ -1,0 +1,727 @@
+<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/17/2022 10:46:51 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="DESKTOP-VQN6DHV"
+  DTS:CreatorName="DESKTOP-VQN6DHV\roeit"
+  DTS:DTSID="{DD43508B-C629-4076-8974-AAEF1E3CBC78}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.694.0"
+  DTS:LocaleID="1037"
+  DTS:ObjectName="Package2"
+  DTS:PackageType="5"
+  DTS:VersionBuild="1"
+  DTS:VersionGUID="{F3E20A18-CD3B-42B1-9075-6D0098EE2AF1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{D714AB2E-611A-47A4-8094-97FA05B1A4C4}"
+      DTS:ObjectName="DESKTOP-VQN6DHV.mrr_dbFinal">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=DESKTOP-VQN6DHV;Initial Catalog=mrr_dbFinal;Provider=SQLNCLI11.1;Integrated Security=SSPI;Application Name=SSIS-Package2-{D714AB2E-611A-47A4-8094-97FA05B1A4C4}DESKTOP-VQN6DHV.mrr_dbFinal;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\mrr2stg agents"
+      DTS:CreationName="Microsoft.Pipeline"
+      DTS:Description="Data Flow Task"
+      DTS:DTSID="{74B803F8-D8F9-45F3-A6D8-55788CEC757D}"
+      DTS:ExecutableType="Microsoft.Pipeline"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="mrr2stg agents"
+      DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <pipeline
+          version="1">
+          <components>
+            <component
+              refId="Package\mrr2stg agents\Derived Column"
+              componentClassID="Microsoft.DerivedColumn"
+              contactInfo="Derived Column;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;0"
+              description="Creates new column values by applying expressions to transformation input columns. Create new columns or overwrite existing ones. For example, concatenate the values from the 'first name' and 'last name' column to make a 'full name' column."
+              name="Derived Column"
+              usesDispositions="true">
+              <inputs>
+                <input
+                  refId="Package\mrr2stg agents\Derived Column.Inputs[Derived Column Input]"
+                  description="Input to the Derived Column Transformation"
+                  name="Derived Column Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\mrr2stg agents\Derived Column.Inputs[Derived Column Input].Columns[AgentFirstname]"
+                      cachedDataType="wstr"
+                      cachedLength="32"
+                      cachedName="AgentFirstname"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[AgentFirstname]" />
+                    <inputColumn
+                      refId="Package\mrr2stg agents\Derived Column.Inputs[Derived Column Input].Columns[lastname]"
+                      cachedDataType="wstr"
+                      cachedLength="80"
+                      cachedName="lastname"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[lastname]" />
+                  </inputColumns>
+                  <externalMetadataColumns />
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Output]"
+                  description="Default Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  name="Derived Column Output"
+                  synchronousInputId="Package\mrr2stg agents\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Output].Columns[AgentName]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Computation"
+                      errorRowDisposition="FailComponent"
+                      length="113"
+                      lineageId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Output].Columns[AgentName]"
+                      name="AgentName"
+                      truncationRowDisposition="FailComponent">
+                      <properties>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Expression"
+                          name="Expression">#{Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[AgentFirstname]} + " " + #{Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[lastname]}</property>
+                        <property
+                          containsID="true"
+                          dataType="System.String"
+                          description="Derived Column Friendly Expression"
+                          expressionType="Notify"
+                          name="FriendlyExpression">AgentFirstname + " " + lastname</property>
+                      </properties>
+                    </outputColumn>
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+                <output
+                  refId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Error Output]"
+                  description="Error Output of the Derived Column Transformation"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="Derived Column Error Output"
+                  synchronousInputId="Package\mrr2stg agents\Derived Column.Inputs[Derived Column Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\mrr2stg agents\mrr_agents"
+              componentClassID="Microsoft.OLEDBSource"
+              contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+              description="OLE DB Source"
+              name="mrr_agents"
+              usesDispositions="true"
+              version="7">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[dbo].[mrr_agents]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.String"
+                  description="The variable that contains the SQL command to be executed."
+                  name="SqlCommandVariable"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1255</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">0</property>
+                <property
+                  dataType="System.String"
+                  description="The mappings between the parameters in the SQL command and variables."
+                  name="ParameterMapping"></property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\mrr2stg agents\mrr_agents.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output]"
+                  name="OLE DB Source Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Agentid]"
+                      dataType="i4"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[AGENT]"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Agentid]"
+                      name="Agentid"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[AgentFirstname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[AGENTNAME]"
+                      length="32"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[AgentFirstname]"
+                      name="AgentFirstname"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Commission]"
+                      dataType="r8"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[COMMISSION]"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Commission]"
+                      name="Commission"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Currency]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[currency]"
+                      length="40"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Currency]"
+                      name="Currency"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[State]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[state]"
+                      length="40"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[State]"
+                      name="State"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Country]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[COUNTRY]"
+                      length="40"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Country]"
+                      name="Country"
+                      truncationRowDisposition="FailComponent" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[lastname]"
+                      dataType="wstr"
+                      errorOrTruncationOperation="Conversion"
+                      errorRowDisposition="FailComponent"
+                      externalMetadataColumnId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[ADDRESS]"
+                      length="80"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[lastname]"
+                      name="lastname"
+                      truncationRowDisposition="FailComponent" />
+                  </outputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[AGENT]"
+                      dataType="i4"
+                      name="AGENT" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[AGENTNAME]"
+                      dataType="wstr"
+                      length="32"
+                      name="AGENTNAME" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[COMMISSION]"
+                      dataType="r8"
+                      name="COMMISSION" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[currency]"
+                      dataType="wstr"
+                      length="40"
+                      name="currency" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[state]"
+                      dataType="wstr"
+                      length="40"
+                      name="state" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[COUNTRY]"
+                      dataType="wstr"
+                      length="40"
+                      name="COUNTRY" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].ExternalColumns[ADDRESS]"
+                      dataType="wstr"
+                      length="80"
+                      name="ADDRESS" />
+                  </externalMetadataColumns>
+                </output>
+                <output
+                  refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output]"
+                  isErrorOut="true"
+                  name="OLE DB Source Error Output">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[AGENT]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[AGENT]"
+                      name="AGENT" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[AGENTNAME]"
+                      dataType="wstr"
+                      length="32"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[AGENTNAME]"
+                      name="AGENTNAME" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[COMMISSION]"
+                      dataType="r8"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[COMMISSION]"
+                      name="COMMISSION" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[currency]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[currency]"
+                      name="currency" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[state]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[state]"
+                      name="state" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[COUNTRY]"
+                      dataType="wstr"
+                      length="40"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[COUNTRY]"
+                      name="COUNTRY" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[ADDRESS]"
+                      dataType="wstr"
+                      length="80"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[ADDRESS]"
+                      name="ADDRESS" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+            <component
+              refId="Package\mrr2stg agents\stg_agents"
+              componentClassID="Microsoft.OLEDBDestination"
+              contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+              description="OLE DB Destination"
+              name="stg_agents"
+              usesDispositions="true"
+              version="4">
+              <properties>
+                <property
+                  dataType="System.Int32"
+                  description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                  name="CommandTimeout">0</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the name of the database object used to open a rowset."
+                  name="OpenRowset">[stg_agents]</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies the variable that contains the name of the database object used to open a rowset."
+                  name="OpenRowsetVariable"></property>
+                <property
+                  dataType="System.String"
+                  description="The SQL command to be executed."
+                  name="SqlCommand"
+                  UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor, Microsoft.DataTransformationServices.Controls, Version=16.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"></property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the column code page to use when code page information is unavailable from the data source."
+                  name="DefaultCodePage">1255</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Forces the use of the DefaultCodePage property value when describing character data."
+                  name="AlwaysUseDefaultCodePage">false</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies the mode used to access the database."
+                  name="AccessMode"
+                  typeConverter="AccessMode">3</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepIdentity">false</property>
+                <property
+                  dataType="System.Boolean"
+                  description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                  name="FastLoadKeepNulls">false</property>
+                <property
+                  dataType="System.String"
+                  description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                  name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                <property
+                  dataType="System.Int32"
+                  description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                  name="FastLoadMaxInsertCommitSize">2147483647</property>
+              </properties>
+              <connections>
+                <connection
+                  refId="Package\mrr2stg agents\stg_agents.Connections[OleDbConnection]"
+                  connectionManagerID="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  connectionManagerRefId="Package.ConnectionManagers[DESKTOP-VQN6DHV.mrr_dbFinal]"
+                  description="The OLE DB runtime connection used to access the database."
+                  name="OleDbConnection" />
+              </connections>
+              <inputs>
+                <input
+                  refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input]"
+                  errorOrTruncationOperation="Insert"
+                  errorRowDisposition="FailComponent"
+                  hasSideEffects="true"
+                  name="OLE DB Destination Input">
+                  <inputColumns>
+                    <inputColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].Columns[Agentid]"
+                      cachedDataType="i4"
+                      cachedName="Agentid"
+                      externalMetadataColumnId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[Agentid]"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Agentid]" />
+                    <inputColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].Columns[Commission]"
+                      cachedDataType="r8"
+                      cachedName="Commission"
+                      externalMetadataColumnId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[Commission]"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Commission]" />
+                    <inputColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].Columns[Currency]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="Currency"
+                      externalMetadataColumnId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[Currency]"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Currency]" />
+                    <inputColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].Columns[State]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="State"
+                      externalMetadataColumnId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[State]" />
+                    <inputColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].Columns[Country]"
+                      cachedDataType="wstr"
+                      cachedLength="40"
+                      cachedName="Country"
+                      externalMetadataColumnId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
+                      lineageId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output].Columns[Country]" />
+                    <inputColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].Columns[AgentName]"
+                      cachedDataType="wstr"
+                      cachedLength="113"
+                      cachedName="AgentName"
+                      externalMetadataColumnId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[AgentName]"
+                      lineageId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Output].Columns[AgentName]" />
+                  </inputColumns>
+                  <externalMetadataColumns
+                    isUsed="True">
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[Agentid]"
+                      dataType="i4"
+                      name="Agentid" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[Commission]"
+                      dataType="r8"
+                      name="Commission" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[Currency]"
+                      dataType="wstr"
+                      length="40"
+                      name="Currency" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[State]"
+                      dataType="wstr"
+                      length="40"
+                      name="State" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[Country]"
+                      dataType="wstr"
+                      length="40"
+                      name="Country" />
+                    <externalMetadataColumn
+                      refId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input].ExternalColumns[AgentName]"
+                      dataType="wstr"
+                      length="113"
+                      name="AgentName" />
+                  </externalMetadataColumns>
+                </input>
+              </inputs>
+              <outputs>
+                <output
+                  refId="Package\mrr2stg agents\stg_agents.Outputs[OLE DB Destination Error Output]"
+                  exclusionGroup="1"
+                  isErrorOut="true"
+                  name="OLE DB Destination Error Output"
+                  synchronousInputId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input]">
+                  <outputColumns>
+                    <outputColumn
+                      refId="Package\mrr2stg agents\stg_agents.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg agents\stg_agents.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                      name="ErrorCode"
+                      specialFlags="1" />
+                    <outputColumn
+                      refId="Package\mrr2stg agents\stg_agents.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      dataType="i4"
+                      lineageId="Package\mrr2stg agents\stg_agents.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                      name="ErrorColumn"
+                      specialFlags="2" />
+                  </outputColumns>
+                  <externalMetadataColumns />
+                </output>
+              </outputs>
+            </component>
+          </components>
+          <paths>
+            <path
+              refId="Package\mrr2stg agents.Paths[Derived Column Output]"
+              endId="Package\mrr2stg agents\stg_agents.Inputs[OLE DB Destination Input]"
+              name="Derived Column Output"
+              startId="Package\mrr2stg agents\Derived Column.Outputs[Derived Column Output]" />
+            <path
+              refId="Package\mrr2stg agents.Paths[OLE DB Source Output]"
+              endId="Package\mrr2stg agents\Derived Column.Inputs[Derived Column Input]"
+              name="OLE DB Source Output"
+              startId="Package\mrr2stg agents\mrr_agents.Outputs[OLE DB Source Output]" />
+          </paths>
+        </pipeline>
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\truncate agents"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{49295D44-D0B6-4F32-A054-6F279B124BF7}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="truncate agents"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{D714AB2E-611A-47A4-8094-97FA05B1A4C4}"
+          SQLTask:SqlStatementSource="truncate table stg_agents" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{60919BB8-8BDA-4D58-A98F-2B51A5ADF787}"
+      DTS:From="Package\truncate agents"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\mrr2stg agents" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150.5,42"
+          Id="Package\mrr2stg agents"
+          TopLeft="254,154.5" />
+        <NodeLayout
+          Size="152.5,42"
+          Id="Package\truncate agents"
+          TopLeft="250.5,43" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="328,85">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,69.5"
+              Start="0,0"
+              End="0,62">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,62" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\mrr2stg agents">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="154,42"
+          Id="Package\mrr2stg agents\Derived Column"
+          TopLeft="319,130.5" />
+        <NodeLayout
+          Size="130.5,42"
+          Id="Package\mrr2stg agents\stg_agents"
+          TopLeft="318,279" />
+        <NodeLayout
+          Size="133,42"
+          Id="Package\mrr2stg agents\mrr_agents"
+          TopLeft="322.5,14.5" />
+        <EdgeLayout
+          Id="Package\mrr2stg agents.Paths[OLE DB Source Output]"
+          TopLeft="392.5,56.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,74"
+              Start="0,0"
+              End="0,66.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,66.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\mrr2stg agents.Paths[Derived Column Output]"
+          TopLeft="396,172.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-12.75,106.5"
+              Start="0,0"
+              End="-12.75,99">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,49.25"
+                    Point2="0,53.25"
+                    Point3="-4,53.25" />
+                  <mssgle:LineSegment
+                    End="-8.75,53.25" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-8.75,53.25"
+                    Point2="-12.75,53.25"
+                    Point3="-12.75,57.25" />
+                  <mssgle:LineSegment
+                    End="-12.75,99" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\mrr2stg agents\stg_agents">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\mrr2stg agents\mrr_agents">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
