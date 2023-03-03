@@ -1,2 +1,3 @@
 # BI-end-to-end-Hyundai
-# [ לחץ למסמך האפיון](README.pdf)
+<p align="center"> ## [למסמך האפיון](README.pdf) </p>
+
