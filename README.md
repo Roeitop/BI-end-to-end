@@ -1,3 +1,6 @@
 # BI-end-to-end-Hyundai
-<p align="center"> ## [למסמך האפיון](README.pdf) </p>
+<div style="text-align:center">
+  <h2><a href="README.pdf">&#x202b;למסמך האפיון</a></h2>
+</div>
+
 
