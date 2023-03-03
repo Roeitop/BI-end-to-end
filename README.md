@@ -1,3 +1,3 @@
 # BI-end-to-end-Hyundai
 
-[Some title here](מסמך אפיון מערכת יונדאי .pdf)
+[Some title here](README.pdf)
